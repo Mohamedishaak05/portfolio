@@ -30,6 +30,12 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+    (function() {
+        emailjs.init("RsyErIDf_c7yWFHfD");
+    })();
+    </script>
 </head>
 
 <body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="51">
@@ -470,7 +476,7 @@
                     </div>
                 </div>
                 <div class="col-lg-7 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <form action="mailto:ishaak815@gmail.com" method="post" enctype="text/plain">
+                    <form id="contactForm">
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
@@ -501,6 +507,7 @@
                             </div>
                         </div>
                     </form>
+                    <p id="statusMsg" style="margin-top:15px; font-weight:600;"></p>
                 </div>
             </div>
         </div>
@@ -555,6 +562,26 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script>
+        document.getElementById("contactForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            emailjs.sendForm(
+                "service_2tz9apr",
+                "template_dz36g03",
+                this
+            ).then(() => {
+                document.getElementById("statusMsg").innerHTML = "✔ Message sent successfully!";
+                document.getElementById("statusMsg").style.color = "green";
+                this.reset();
+            }).catch((err) => {
+                document.getElementById("statusMsg").innerHTML = "✖ Failed to send message.";
+                document.getElementById("statusMsg").style.color = "red";
+                console.error(err);
+            });
+        });
+    </script>
+
 </body>
 
 </html>
